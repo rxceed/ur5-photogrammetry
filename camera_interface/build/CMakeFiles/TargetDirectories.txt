@@ -1,3 +1,0 @@
-/home/risangr/projects/ur5-photogrammetry/camera_interface/build/CMakeFiles/ur5_capture.dir
-/home/risangr/projects/ur5-photogrammetry/camera_interface/build/CMakeFiles/edit_cache.dir
-/home/risangr/projects/ur5-photogrammetry/camera_interface/build/CMakeFiles/rebuild_cache.dir
