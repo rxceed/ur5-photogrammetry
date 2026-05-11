@@ -18,7 +18,6 @@ export abstract class WebODM_AuthService{
                     method: "POST",
                     body: new URLSearchParams(fetchData),
                 });
-        console.log(res)
         if(!res.ok) {
             const errorData = await res.json();
             throw status(500, JSON.stringify(errorData));
@@ -87,19 +86,33 @@ export abstract class WebODM_ProjectService{
 }
 
 export abstract class WebODM_TaskService{
-    static async createWebODMTask({projectId, name, images}: taskModel['taskBody'], token: string,){
+    static async createWebODMTask({projectName, name, images}: taskModel['taskBody'], token: string,){
         const fetchData = {
-            projectId: projectId,
+            projectName: projectName,
             name: name
         }
-        const url = `${WEBODM_URI_BASE}/api/projects/${fetchData.projectId}/tasks/`;
+        const urlProject: string = `${WEBODM_URI_BASE}/api/projects/?name=${fetchData.projectName}`
+        const resProject = await fetch(urlProject, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `JWT ${token}`
+                    }
+                })
+        if(!resProject.ok) {
+            const errorData = await resProject.json();
+            throw status(500, `Internal Server Error: ${JSON.stringify(errorData)}`);
+        }
+        const resProjectJSON = await resProject.json()
+        const projectId = resProjectJSON.id
+        const url = `${WEBODM_URI_BASE}/api/projects/${projectId}/tasks/`;
         const taskOptions = [{"name":"auto-boundary","value":true},
             {"name":"use-hybrid-bundle-adjustment","value":true},
             {"name":"mesh-octree-depth","value":"12"},
-            {"name":"skip-orthophoto","value":true}]
+            {"name":"skip-orthophoto","value":true},
+            {"name":"pc-quality", "value":"high"},
+            {"name":"mesh-size", "value":300000}]
         // 1. Prepare FormData (required for multipart/form-data)
         const formData = new FormData();
-
         // 2. Append images (WebODM expects the key "images")
         // Note: Even though the docs say "images[]", in Fetch/FormData 
         // you usually append to the same key multiple times.
