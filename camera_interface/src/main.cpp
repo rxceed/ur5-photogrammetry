@@ -10,7 +10,7 @@ int main(int argc, char** argv)
     CaptureConfig config;
 
     if (argc >= 2) {
-        config.endpointUrl = argv[1];
+        config.inputUrl = argv[1];
     }
 
     if (argc >= 3) {
@@ -18,11 +18,15 @@ int main(int argc, char** argv)
     }
 
     if (argc >= 4) {
-        config.triggerPin = std::stoi(argv[3]);
+        config.photoTriggerPin = std::stoi(argv[3]);
     }
 
     if (argc >= 5) {
         config.cameraIndex = std::stoi(argv[4]);
+    }
+
+    if (argc >= 6) {
+        config.relayBaseUrl = argv[5];
     }
 
     curl_global_init(CURL_GLOBAL_DEFAULT);

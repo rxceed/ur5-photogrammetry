@@ -18,16 +18,17 @@ cd "$PROJECT_DIR"
 
 mkdir -p "$DATASET_DIR/images"
 
-echo "[INFO] Starting UR5 OpenSfM capture..."
-echo "[INFO] Endpoint    : $ENDPOINT_URL"
-echo "[INFO] Dataset     : $DATASET_DIR"
-echo "[INFO] Trigger pin : $TRIGGER_PIN"
-echo "[INFO] Stop pin    : $STOP_PIN"
-echo "[INFO] Camera      : $CAMERA_INDEX"
+echo "[INFO] Starting UR5 waypoint capture sequence..."
+echo "[INFO] Input URL         : $INPUT_URL"
+echo "[INFO] Relay Base URL    : $RELAY_BASE_URL"
+echo "[INFO] Dataset           : $DATASET_DIR"
+echo "[INFO] Photo trigger pin : $PHOTO_TRIGGER_PIN"
+echo "[INFO] Camera index      : $CAMERA_INDEX"
 echo ""
 
 "$EXECUTABLE_PATH" \
-    "$ENDPOINT_URL" \
+    "$INPUT_URL" \
     "$DATASET_DIR" \
-    "$TRIGGER_PIN" \
-    "$CAMERA_INDEX"
+    "$PHOTO_TRIGGER_PIN" \
+    "$CAMERA_INDEX" \
+    "$RELAY_BASE_URL"

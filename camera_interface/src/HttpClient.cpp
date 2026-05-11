@@ -2,6 +2,7 @@
 
 #include <curl/curl.h>
 #include <stdexcept>
+#include <string>
 
 static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp)
 {
@@ -27,9 +28,9 @@ std::string HttpClient::get(const std::string& url) const
     }
 
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_HTTPGET, 1L);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
-
     curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT_MS, connectTimeoutMs_);
     curl_easy_setopt(curl, CURLOPT_TIMEOUT_MS, requestTimeoutMs_);
 
@@ -43,11 +44,60 @@ std::string HttpClient::get(const std::string& url) const
 
     long httpCode = 0;
     curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &httpCode);
-
     curl_easy_cleanup(curl);
 
-    if (httpCode != 200) {
-        throw std::runtime_error("HTTP response code: " + std::to_string(httpCode));
+    if (httpCode < 200 || httpCode >= 300) {
+        throw std::runtime_error("HTTP GET response code: " + std::to_string(httpCode));
+    }
+
+    return response;
+}
+
+std::string HttpClient::post(const std::string& url, const std::string& body) const
+{
+    CURL* curl = curl_easy_init();
+    std::string response;
+
+    if (!curl) {
+        throw std::runtime_error("Failed to initialize CURL");
+    }
+
+    struct curl_slist* headers = nullptr;
+    headers = curl_slist_append(headers, "Content-Type: application/x-www-form-urlencoded");
+
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_POST, 1L);
+
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body.c_str());
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, body.size());
+
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+
+    curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT_MS, connectTimeoutMs_);
+    curl_easy_setopt(curl, CURLOPT_TIMEOUT_MS, requestTimeoutMs_);
+
+    CURLcode result = curl_easy_perform(curl);
+
+    if (result != CURLE_OK) {
+        std::string error = curl_easy_strerror(result);
+        curl_slist_free_all(headers);
+        curl_easy_cleanup(curl);
+        throw std::runtime_error("HTTP POST failed: " + error);
+    }
+
+    long httpCode = 0;
+    curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &httpCode);
+
+    curl_slist_free_all(headers);
+    curl_easy_cleanup(curl);
+
+    if (httpCode < 200 || httpCode >= 300) {
+        throw std::runtime_error(
+            "HTTP POST response code: " + std::to_string(httpCode) +
+            " body: " + response
+        );
     }
 
     return response;
