@@ -27,4 +27,3 @@ opensfm.log
 .DS_Store
 
 # Runtime config
-*.env
