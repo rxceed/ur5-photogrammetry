@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Camera Stream UI</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #111827;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 700px;
+      text-align: center;
+      background: #1f2937;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
+
+    video {
+      width: 100%;
+      border-radius: 12px;
+      background: black;
+    }
+
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    button {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .start {
+      background: #10b981;
+      color: white;
+    }
+
+    .preview {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .upload {
+      background: #f59e0b;
+      color: white;
+    }
+
+    canvas {
+      display: none;
+    }
+
+    img {
+      margin-top: 20px;
+      width: 100%;
+      border-radius: 12px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Camera Stream</h1>
+
+    <video id="video" autoplay playsinline></video>
+
+    <div class="buttons">
+      <button class="start" onclick="startCamera()">Start</button>
+      <button class="preview" onclick="previewFrame()">Preview</button>
+      <button class="upload" onclick="uploadFrame()">Upload</button>
+    </div>
+
+    <canvas id="canvas"></canvas>
+    <img id="previewImage" />
+  </div>
+
+  <script>
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("canvas");
+    const previewImage = document.getElementById("previewImage");
+
+    async function startCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: false
+        });
+
+        video.srcObject = stream;
+      } catch (err) {
+        alert("Could not access camera");
+        console.error(err);
+      }
+    }
+
+    function previewFrame() {
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+
+      ctx.drawImage(video, 0, 0);
+
+      const imageData = canvas.toDataURL("image/png");
+
+      previewImage.src = imageData;
+      previewImage.style.display = "block";
+    }
+
+    function uploadFrame() {
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+
+      ctx.drawImage(video, 0, 0);
+
+      canvas.toBlob((blob) => {
+        const formData = new FormData();
+        formData.append("file", blob, "frame.png");
+
+        // Replace with your backend endpoint
+        fetch("/upload", {
+          method: "POST",
+          body: formData
+        })
+        .then(res => {
+          alert("Upload successful!");
+        })
+        .catch(err => {
+          alert("Upload failed");
+          console.error(err);
+        });
+      });
+    }
+  </script>
+
+</body>
+</html>
