@@ -1,8 +1,8 @@
 CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.o: \
- /home/mumu/projects/opensfm_tadin/src/JsonInputParser.cpp \
+ /home/risangr/projects/ur5-photogrammetry/camera_interface/src/JsonInputParser.cpp \
  /usr/include/stdc-predef.h \
- /home/mumu/projects/opensfm_tadin/include/JsonInputParser.hpp \
- /home/mumu/projects/opensfm_tadin/include/PinSnapshot.hpp \
+ /home/risangr/projects/ur5-photogrammetry/camera_interface/include/JsonInputParser.hpp \
+ /home/risangr/projects/ur5-photogrammetry/camera_interface/include/PinSnapshot.hpp \
  /usr/include/c++/13/map /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \

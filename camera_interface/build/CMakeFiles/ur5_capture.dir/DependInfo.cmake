@@ -8,13 +8,13 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/mumu/projects/opensfm_tadin/src/CameraCapture.cpp" "CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.o" "gcc" "CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.o.d"
-  "/home/mumu/projects/opensfm_tadin/src/CaptureController.cpp" "CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.o" "gcc" "CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.o.d"
-  "/home/mumu/projects/opensfm_tadin/src/HttpClient.cpp" "CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.o" "gcc" "CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.o.d"
-  "/home/mumu/projects/opensfm_tadin/src/JsonInputParser.cpp" "CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.o" "gcc" "CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.o.d"
-  "/home/mumu/projects/opensfm_tadin/src/Utils.cpp" "CMakeFiles/ur5_capture.dir/src/Utils.cpp.o" "gcc" "CMakeFiles/ur5_capture.dir/src/Utils.cpp.o.d"
-  "/home/mumu/projects/opensfm_tadin/src/WaypointRelayController.cpp" "CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.o" "gcc" "CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.o.d"
-  "/home/mumu/projects/opensfm_tadin/src/main.cpp" "CMakeFiles/ur5_capture.dir/src/main.cpp.o" "gcc" "CMakeFiles/ur5_capture.dir/src/main.cpp.o.d"
+  "/home/risangr/projects/ur5-photogrammetry/camera_interface/src/CameraCapture.cpp" "CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.o" "gcc" "CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.o.d"
+  "/home/risangr/projects/ur5-photogrammetry/camera_interface/src/CaptureController.cpp" "CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.o" "gcc" "CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.o.d"
+  "/home/risangr/projects/ur5-photogrammetry/camera_interface/src/HttpClient.cpp" "CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.o" "gcc" "CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.o.d"
+  "/home/risangr/projects/ur5-photogrammetry/camera_interface/src/JsonInputParser.cpp" "CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.o" "gcc" "CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.o.d"
+  "/home/risangr/projects/ur5-photogrammetry/camera_interface/src/Utils.cpp" "CMakeFiles/ur5_capture.dir/src/Utils.cpp.o" "gcc" "CMakeFiles/ur5_capture.dir/src/Utils.cpp.o.d"
+  "/home/risangr/projects/ur5-photogrammetry/camera_interface/src/WaypointRelayController.cpp" "CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.o" "gcc" "CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.o.d"
+  "/home/risangr/projects/ur5-photogrammetry/camera_interface/src/main.cpp" "CMakeFiles/ur5_capture.dir/src/main.cpp.o" "gcc" "CMakeFiles/ur5_capture.dir/src/main.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

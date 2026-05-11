@@ -96,123 +96,96 @@ bool CaptureController::waitForPhotoTriggerAndCapture(
     const fs::path& imageDir
 )
 {
-    std::cout << "[INFO] Waiting photo trigger for waypoint "
-              << waypointId << "\n";
+    std::cout << "[INFO] Waypoint " << waypointId << ": Waiting for robot signal...\n";
 
     PinSnapshot previousPins;
     PinSnapshot currentPins;
     std::string rawJson;
 
     previousPins = readPinsSafe(previousPins, &rawJson);
-
     auto startTime = std::chrono::steady_clock::now();
+
+    // --- ADJUST THIS: How long to wait before "pressing C" automatically ---
+    const int64_t autoCaptureDelayMs = 1000; 
 
     while (true) {
         auto now = std::chrono::steady_clock::now();
+        auto elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - startTime).count();
 
-        auto elapsedMs =
-            std::chrono::duration_cast<std::chrono::milliseconds>(
-                now - startTime
-            ).count();
-
+        // 1. Hard Timeout (Total wait time allowed before error)
         if (elapsedMs > config_.triggerTimeoutMs) {
-            std::cerr << "[ERROR] Timeout waiting trigger at waypoint "
-                      << waypointId << "\n";
+            std::cerr << "[ERROR] Timeout at waypoint " << waypointId << "\n";
             return false;
         }
 
         cv::Mat rawFrame;
-
         if (!camera_.readFrame(rawFrame)) {
-            std::cerr << "[WARN] Empty camera frame\n";
-
-            std::this_thread::sleep_for(
-                std::chrono::milliseconds(config_.pollingDelayMs)
-            );
-
+            std::this_thread::sleep_for(std::chrono::milliseconds(config_.pollingDelayMs));
             continue;
         }
 
+        // 2. Hardware Signal Check
         try {
             rawJson = httpClient_.get(config_.inputUrl);
             currentPins = parseInputJson(rawJson);
-        } catch (const std::exception& e) {
-            std::cerr << "[WARN] HTTP/JSON error: "
-                      << e.what() << "\n";
+        } catch (...) {
             currentPins = previousPins;
         }
 
         int previousState = previousPins.getState(config_.photoTriggerPin, 0);
         int currentState = currentPins.getState(config_.photoTriggerPin, 0);
+        
+        // This is your crucial rising edge logic
+        bool risingEdge = (previousState == 0 && currentState == 1);
 
-        bool risingEdge = previousState == 0 && currentState == 1;
+        // 3. SUBSTITUTE FOR PRESSING 'C'
+        // If the hardware signal hasn't arrived, but the delay has passed:
+        if (!risingEdge && elapsedMs >= autoCaptureDelayMs) {
+            std::cout << "[AUTO] Signal timer reached (" << autoCaptureDelayMs << "ms). Simulating capture trigger...\n";
+            risingEdge = true; // Set risingEdge to true to trigger the capture block below
+        }
 
+        // 4. Update UI
         cv::Mat preview = rawFrame.clone();
         drawOverlay(preview, currentPins.states);
-
-        cv::putText(
-            preview,
-            "Waypoint " + std::to_string(waypointId) +
-            " | waiting PIN " +
-            std::to_string(config_.photoTriggerPin) +
-            " rising edge",
-            cv::Point(20, preview.rows - 55),
-            cv::FONT_HERSHEY_SIMPLEX,
-            0.6,
-            cv::Scalar(255, 255, 255),
-            2
-        );
-
+        
+        std::string statusText = "Waiting for Pin " + std::to_string(config_.photoTriggerPin);
+        if (elapsedMs >= autoCaptureDelayMs) statusText = "AUTO-TRIGGERING...";
+        
+        cv::putText(preview, statusText, cv::Point(20, preview.rows - 55),
+                    cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0, 255, 255), 2);
+        
         cv::imshow("UR5 OpenSfM Capture", preview);
-
+        
+        // Check for 'Q' to quit, but removed the 'C' capture check
         int key = cv::waitKey(1);
+        if (key == 'q' || key == 'Q' || key == 27) return false;
 
-        if (key == 'c' || key == 'C') {
-            std::cout << "[MANUAL] Capture requested\n";
-            risingEdge = true;
-        }
-
-        if (key == 'q' || key == 'Q' || key == 27) {
-            return false;
-        }
-
+        // 5. Capture Logic (triggered by Hardware Pulse OR Timer)
         if (risingEdge) {
             std::string filename = makeImageName(imageIndex);
             fs::path imagePath = imageDir / filename;
 
-            bool saved = camera_.saveImage(rawFrame, imagePath);
+            if (camera_.saveImage(rawFrame, imagePath)) {
+                std::cout << "[CAPTURE] Waypoint " << waypointId << " saved.\n";
 
-            if (!saved) {
-                std::cerr << "[ERROR] Failed to save image\n";
-                return false;
+                json meta;
+                meta["filename"] = filename;
+                meta["timestamp"] = timestampNow();
+                meta["waypoint"] = waypointId;
+                meta["trigger_type"] = (elapsedMs >= autoCaptureDelayMs) ? "timer" : "hardware";
+                meta["pins"] = currentPins.states;
+                
+                metadata << meta.dump() << "\n";
+                metadata.flush();
+
+                imageIndex++;
+                return true;
             }
-
-            std::cout << "[CAPTURE] Waypoint "
-                      << waypointId
-                      << " -> "
-                      << imagePath << "\n";
-
-            json meta;
-            meta["filename"] = filename;
-            meta["timestamp"] = timestampNow();
-            meta["waypoint"] = waypointId;
-            meta["photo_trigger_pin"] = config_.photoTriggerPin;
-            meta["pins"] = currentPins.states;
-            meta["raw_json"] = rawJson;
-
-            metadata << meta.dump() << "\n";
-            metadata.flush();
-
-            imageIndex++;
-
-            return true;
         }
 
         previousPins = currentPins;
-
-        std::this_thread::sleep_for(
-            std::chrono::milliseconds(config_.pollingDelayMs)
-        );
+        std::this_thread::sleep_for(std::chrono::milliseconds(config_.pollingDelayMs));
     }
 }
 

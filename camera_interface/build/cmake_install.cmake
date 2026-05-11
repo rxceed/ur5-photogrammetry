@@ -1,4 +1,4 @@
-# Install script for directory: /home/mumu/projects/opensfm_tadin
+# Install script for directory: /home/risangr/projects/ur5-photogrammetry/camera_interface
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/mumu/projects/opensfm_tadin/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/risangr/projects/ur5-photogrammetry/camera_interface/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

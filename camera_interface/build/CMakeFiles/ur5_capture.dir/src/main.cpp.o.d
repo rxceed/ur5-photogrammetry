@@ -1,8 +1,8 @@
 CMakeFiles/ur5_capture.dir/src/main.cpp.o: \
- /home/mumu/projects/opensfm_tadin/src/main.cpp \
+ /home/risangr/projects/ur5-photogrammetry/camera_interface/src/main.cpp \
  /usr/include/stdc-predef.h \
- /home/mumu/projects/opensfm_tadin/include/CaptureController.hpp \
- /home/mumu/projects/opensfm_tadin/include/HttpClient.hpp \
+ /home/risangr/projects/ur5-photogrammetry/camera_interface/include/CaptureController.hpp \
+ /home/risangr/projects/ur5-photogrammetry/camera_interface/include/HttpClient.hpp \
  /usr/include/c++/13/string /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
@@ -117,7 +117,7 @@ CMakeFiles/ur5_capture.dir/src/main.cpp.o: \
  /usr/include/c++/13/bits/memory_resource.h /usr/include/c++/13/cstddef \
  /usr/include/c++/13/bits/uses_allocator.h \
  /usr/include/c++/13/bits/uses_allocator_args.h /usr/include/c++/13/tuple \
- /home/mumu/projects/opensfm_tadin/include/CameraCapture.hpp \
+ /home/risangr/projects/ur5-photogrammetry/camera_interface/include/CameraCapture.hpp \
  /usr/include/opencv4/opencv2/opencv.hpp \
  /usr/include/opencv4/opencv2/opencv_modules.hpp \
  /usr/include/opencv4/opencv2/core.hpp \
@@ -359,8 +359,8 @@ CMakeFiles/ur5_capture.dir/src/main.cpp.o: \
  /usr/include/c++/13/filesystem /usr/include/c++/13/bits/fs_fwd.h \
  /usr/include/c++/13/bits/fs_path.h /usr/include/c++/13/codecvt \
  /usr/include/c++/13/bits/fs_dir.h /usr/include/c++/13/bits/fs_ops.h \
- /home/mumu/projects/opensfm_tadin/include/PinSnapshot.hpp \
- /home/mumu/projects/opensfm_tadin/include/WaypointRelayController.hpp \
+ /home/risangr/projects/ur5-photogrammetry/camera_interface/include/PinSnapshot.hpp \
+ /home/risangr/projects/ur5-photogrammetry/camera_interface/include/WaypointRelayController.hpp \
  /usr/include/c++/13/fstream \
  /usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h \

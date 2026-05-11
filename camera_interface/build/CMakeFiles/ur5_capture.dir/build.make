@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mumu/projects/opensfm_tadin
+CMAKE_SOURCE_DIR = /home/risangr/projects/ur5-photogrammetry/camera_interface
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mumu/projects/opensfm_tadin/build
+CMAKE_BINARY_DIR = /home/risangr/projects/ur5-photogrammetry/camera_interface/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/ur5_capture.dir/depend.make
@@ -70,102 +70,102 @@ include CMakeFiles/ur5_capture.dir/progress.make
 include CMakeFiles/ur5_capture.dir/flags.make
 
 CMakeFiles/ur5_capture.dir/src/main.cpp.o: CMakeFiles/ur5_capture.dir/flags.make
-CMakeFiles/ur5_capture.dir/src/main.cpp.o: /home/mumu/projects/opensfm_tadin/src/main.cpp
+CMakeFiles/ur5_capture.dir/src/main.cpp.o: /home/risangr/projects/ur5-photogrammetry/camera_interface/src/main.cpp
 CMakeFiles/ur5_capture.dir/src/main.cpp.o: CMakeFiles/ur5_capture.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mumu/projects/opensfm_tadin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/ur5_capture.dir/src/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur5_capture.dir/src/main.cpp.o -MF CMakeFiles/ur5_capture.dir/src/main.cpp.o.d -o CMakeFiles/ur5_capture.dir/src/main.cpp.o -c /home/mumu/projects/opensfm_tadin/src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/risangr/projects/ur5-photogrammetry/camera_interface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/ur5_capture.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur5_capture.dir/src/main.cpp.o -MF CMakeFiles/ur5_capture.dir/src/main.cpp.o.d -o CMakeFiles/ur5_capture.dir/src/main.cpp.o -c /home/risangr/projects/ur5-photogrammetry/camera_interface/src/main.cpp
 
 CMakeFiles/ur5_capture.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ur5_capture.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mumu/projects/opensfm_tadin/src/main.cpp > CMakeFiles/ur5_capture.dir/src/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/risangr/projects/ur5-photogrammetry/camera_interface/src/main.cpp > CMakeFiles/ur5_capture.dir/src/main.cpp.i
 
 CMakeFiles/ur5_capture.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ur5_capture.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mumu/projects/opensfm_tadin/src/main.cpp -o CMakeFiles/ur5_capture.dir/src/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/risangr/projects/ur5-photogrammetry/camera_interface/src/main.cpp -o CMakeFiles/ur5_capture.dir/src/main.cpp.s
 
 CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.o: CMakeFiles/ur5_capture.dir/flags.make
-CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.o: /home/mumu/projects/opensfm_tadin/src/HttpClient.cpp
+CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.o: /home/risangr/projects/ur5-photogrammetry/camera_interface/src/HttpClient.cpp
 CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.o: CMakeFiles/ur5_capture.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mumu/projects/opensfm_tadin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.o -MF CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.o.d -o CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.o -c /home/mumu/projects/opensfm_tadin/src/HttpClient.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/risangr/projects/ur5-photogrammetry/camera_interface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.o -MF CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.o.d -o CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.o -c /home/risangr/projects/ur5-photogrammetry/camera_interface/src/HttpClient.cpp
 
 CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mumu/projects/opensfm_tadin/src/HttpClient.cpp > CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/risangr/projects/ur5-photogrammetry/camera_interface/src/HttpClient.cpp > CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.i
 
 CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mumu/projects/opensfm_tadin/src/HttpClient.cpp -o CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/risangr/projects/ur5-photogrammetry/camera_interface/src/HttpClient.cpp -o CMakeFiles/ur5_capture.dir/src/HttpClient.cpp.s
 
 CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.o: CMakeFiles/ur5_capture.dir/flags.make
-CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.o: /home/mumu/projects/opensfm_tadin/src/JsonInputParser.cpp
+CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.o: /home/risangr/projects/ur5-photogrammetry/camera_interface/src/JsonInputParser.cpp
 CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.o: CMakeFiles/ur5_capture.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mumu/projects/opensfm_tadin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.o -MF CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.o.d -o CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.o -c /home/mumu/projects/opensfm_tadin/src/JsonInputParser.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/risangr/projects/ur5-photogrammetry/camera_interface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.o -MF CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.o.d -o CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.o -c /home/risangr/projects/ur5-photogrammetry/camera_interface/src/JsonInputParser.cpp
 
 CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mumu/projects/opensfm_tadin/src/JsonInputParser.cpp > CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/risangr/projects/ur5-photogrammetry/camera_interface/src/JsonInputParser.cpp > CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.i
 
 CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mumu/projects/opensfm_tadin/src/JsonInputParser.cpp -o CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/risangr/projects/ur5-photogrammetry/camera_interface/src/JsonInputParser.cpp -o CMakeFiles/ur5_capture.dir/src/JsonInputParser.cpp.s
 
 CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.o: CMakeFiles/ur5_capture.dir/flags.make
-CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.o: /home/mumu/projects/opensfm_tadin/src/CameraCapture.cpp
+CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.o: /home/risangr/projects/ur5-photogrammetry/camera_interface/src/CameraCapture.cpp
 CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.o: CMakeFiles/ur5_capture.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mumu/projects/opensfm_tadin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.o -MF CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.o.d -o CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.o -c /home/mumu/projects/opensfm_tadin/src/CameraCapture.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/risangr/projects/ur5-photogrammetry/camera_interface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.o -MF CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.o.d -o CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.o -c /home/risangr/projects/ur5-photogrammetry/camera_interface/src/CameraCapture.cpp
 
 CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mumu/projects/opensfm_tadin/src/CameraCapture.cpp > CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/risangr/projects/ur5-photogrammetry/camera_interface/src/CameraCapture.cpp > CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.i
 
 CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mumu/projects/opensfm_tadin/src/CameraCapture.cpp -o CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/risangr/projects/ur5-photogrammetry/camera_interface/src/CameraCapture.cpp -o CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.s
 
 CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.o: CMakeFiles/ur5_capture.dir/flags.make
-CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.o: /home/mumu/projects/opensfm_tadin/src/CaptureController.cpp
+CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.o: /home/risangr/projects/ur5-photogrammetry/camera_interface/src/CaptureController.cpp
 CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.o: CMakeFiles/ur5_capture.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mumu/projects/opensfm_tadin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.o -MF CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.o.d -o CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.o -c /home/mumu/projects/opensfm_tadin/src/CaptureController.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/risangr/projects/ur5-photogrammetry/camera_interface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.o -MF CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.o.d -o CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.o -c /home/risangr/projects/ur5-photogrammetry/camera_interface/src/CaptureController.cpp
 
 CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mumu/projects/opensfm_tadin/src/CaptureController.cpp > CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/risangr/projects/ur5-photogrammetry/camera_interface/src/CaptureController.cpp > CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.i
 
 CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mumu/projects/opensfm_tadin/src/CaptureController.cpp -o CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/risangr/projects/ur5-photogrammetry/camera_interface/src/CaptureController.cpp -o CMakeFiles/ur5_capture.dir/src/CaptureController.cpp.s
 
 CMakeFiles/ur5_capture.dir/src/Utils.cpp.o: CMakeFiles/ur5_capture.dir/flags.make
-CMakeFiles/ur5_capture.dir/src/Utils.cpp.o: /home/mumu/projects/opensfm_tadin/src/Utils.cpp
+CMakeFiles/ur5_capture.dir/src/Utils.cpp.o: /home/risangr/projects/ur5-photogrammetry/camera_interface/src/Utils.cpp
 CMakeFiles/ur5_capture.dir/src/Utils.cpp.o: CMakeFiles/ur5_capture.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mumu/projects/opensfm_tadin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/ur5_capture.dir/src/Utils.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur5_capture.dir/src/Utils.cpp.o -MF CMakeFiles/ur5_capture.dir/src/Utils.cpp.o.d -o CMakeFiles/ur5_capture.dir/src/Utils.cpp.o -c /home/mumu/projects/opensfm_tadin/src/Utils.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/risangr/projects/ur5-photogrammetry/camera_interface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/ur5_capture.dir/src/Utils.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur5_capture.dir/src/Utils.cpp.o -MF CMakeFiles/ur5_capture.dir/src/Utils.cpp.o.d -o CMakeFiles/ur5_capture.dir/src/Utils.cpp.o -c /home/risangr/projects/ur5-photogrammetry/camera_interface/src/Utils.cpp
 
 CMakeFiles/ur5_capture.dir/src/Utils.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ur5_capture.dir/src/Utils.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mumu/projects/opensfm_tadin/src/Utils.cpp > CMakeFiles/ur5_capture.dir/src/Utils.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/risangr/projects/ur5-photogrammetry/camera_interface/src/Utils.cpp > CMakeFiles/ur5_capture.dir/src/Utils.cpp.i
 
 CMakeFiles/ur5_capture.dir/src/Utils.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ur5_capture.dir/src/Utils.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mumu/projects/opensfm_tadin/src/Utils.cpp -o CMakeFiles/ur5_capture.dir/src/Utils.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/risangr/projects/ur5-photogrammetry/camera_interface/src/Utils.cpp -o CMakeFiles/ur5_capture.dir/src/Utils.cpp.s
 
 CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.o: CMakeFiles/ur5_capture.dir/flags.make
-CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.o: /home/mumu/projects/opensfm_tadin/src/WaypointRelayController.cpp
+CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.o: /home/risangr/projects/ur5-photogrammetry/camera_interface/src/WaypointRelayController.cpp
 CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.o: CMakeFiles/ur5_capture.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mumu/projects/opensfm_tadin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.o -MF CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.o.d -o CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.o -c /home/mumu/projects/opensfm_tadin/src/WaypointRelayController.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/risangr/projects/ur5-photogrammetry/camera_interface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.o -MF CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.o.d -o CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.o -c /home/risangr/projects/ur5-photogrammetry/camera_interface/src/WaypointRelayController.cpp
 
 CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mumu/projects/opensfm_tadin/src/WaypointRelayController.cpp > CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/risangr/projects/ur5-photogrammetry/camera_interface/src/WaypointRelayController.cpp > CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.i
 
 CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mumu/projects/opensfm_tadin/src/WaypointRelayController.cpp -o CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/risangr/projects/ur5-photogrammetry/camera_interface/src/WaypointRelayController.cpp -o CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.s
 
 # Object files for target ur5_capture
 ur5_capture_OBJECTS = \
@@ -245,7 +245,7 @@ ur5_capture: /usr/lib/x86_64-linux-gnu/libopencv_photo.so.4.6.0
 ur5_capture: /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so.4.6.0
 ur5_capture: /usr/lib/x86_64-linux-gnu/libopencv_core.so.4.6.0
 ur5_capture: CMakeFiles/ur5_capture.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/mumu/projects/opensfm_tadin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable ur5_capture"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/risangr/projects/ur5-photogrammetry/camera_interface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable ur5_capture"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ur5_capture.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -257,6 +257,6 @@ CMakeFiles/ur5_capture.dir/clean:
 .PHONY : CMakeFiles/ur5_capture.dir/clean
 
 CMakeFiles/ur5_capture.dir/depend:
-	cd /home/mumu/projects/opensfm_tadin/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mumu/projects/opensfm_tadin /home/mumu/projects/opensfm_tadin /home/mumu/projects/opensfm_tadin/build /home/mumu/projects/opensfm_tadin/build /home/mumu/projects/opensfm_tadin/build/CMakeFiles/ur5_capture.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/risangr/projects/ur5-photogrammetry/camera_interface/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/risangr/projects/ur5-photogrammetry/camera_interface /home/risangr/projects/ur5-photogrammetry/camera_interface /home/risangr/projects/ur5-photogrammetry/camera_interface/build /home/risangr/projects/ur5-photogrammetry/camera_interface/build /home/risangr/projects/ur5-photogrammetry/camera_interface/build/CMakeFiles/ur5_capture.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/ur5_capture.dir/depend
 

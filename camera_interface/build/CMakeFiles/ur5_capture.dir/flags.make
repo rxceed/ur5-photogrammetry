@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/mumu/projects/opensfm_tadin/include -isystem /usr/include/opencv4
+CXX_INCLUDES = -I/home/risangr/projects/ur5-photogrammetry/camera_interface/include -isystem /usr/include/opencv4
 
 CXX_FLAGS = -std=gnu++17
 

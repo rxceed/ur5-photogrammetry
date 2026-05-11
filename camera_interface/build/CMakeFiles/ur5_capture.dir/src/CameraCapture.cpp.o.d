@@ -1,7 +1,7 @@
 CMakeFiles/ur5_capture.dir/src/CameraCapture.cpp.o: \
- /home/mumu/projects/opensfm_tadin/src/CameraCapture.cpp \
+ /home/risangr/projects/ur5-photogrammetry/camera_interface/src/CameraCapture.cpp \
  /usr/include/stdc-predef.h \
- /home/mumu/projects/opensfm_tadin/include/CameraCapture.hpp \
+ /home/risangr/projects/ur5-photogrammetry/camera_interface/include/CameraCapture.hpp \
  /usr/include/opencv4/opencv2/opencv.hpp \
  /usr/include/opencv4/opencv2/opencv_modules.hpp \
  /usr/include/opencv4/opencv2/core.hpp \

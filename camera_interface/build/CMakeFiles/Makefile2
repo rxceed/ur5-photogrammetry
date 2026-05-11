@@ -54,10 +54,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mumu/projects/opensfm_tadin
+CMAKE_SOURCE_DIR = /home/risangr/projects/ur5-photogrammetry/camera_interface
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mumu/projects/opensfm_tadin/build
+CMAKE_BINARY_DIR = /home/risangr/projects/ur5-photogrammetry/camera_interface/build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -81,14 +81,14 @@ clean: CMakeFiles/ur5_capture.dir/clean
 CMakeFiles/ur5_capture.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur5_capture.dir/build.make CMakeFiles/ur5_capture.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur5_capture.dir/build.make CMakeFiles/ur5_capture.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/mumu/projects/opensfm_tadin/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target ur5_capture"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/risangr/projects/ur5-photogrammetry/camera_interface/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target ur5_capture"
 .PHONY : CMakeFiles/ur5_capture.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/ur5_capture.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mumu/projects/opensfm_tadin/build/CMakeFiles 8
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/risangr/projects/ur5-photogrammetry/camera_interface/build/CMakeFiles 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/ur5_capture.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mumu/projects/opensfm_tadin/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/risangr/projects/ur5-photogrammetry/camera_interface/build/CMakeFiles 0
 .PHONY : CMakeFiles/ur5_capture.dir/rule
 
 # Convenience name for target.

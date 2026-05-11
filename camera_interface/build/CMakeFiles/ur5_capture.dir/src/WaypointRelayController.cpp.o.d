@@ -1,8 +1,8 @@
 CMakeFiles/ur5_capture.dir/src/WaypointRelayController.cpp.o: \
- /home/mumu/projects/opensfm_tadin/src/WaypointRelayController.cpp \
+ /home/risangr/projects/ur5-photogrammetry/camera_interface/src/WaypointRelayController.cpp \
  /usr/include/stdc-predef.h \
- /home/mumu/projects/opensfm_tadin/include/WaypointRelayController.hpp \
- /home/mumu/projects/opensfm_tadin/include/HttpClient.hpp \
+ /home/risangr/projects/ur5-photogrammetry/camera_interface/include/WaypointRelayController.hpp \
+ /home/risangr/projects/ur5-photogrammetry/camera_interface/include/HttpClient.hpp \
  /usr/include/c++/13/string /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
