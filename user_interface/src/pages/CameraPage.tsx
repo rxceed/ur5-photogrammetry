@@ -26,18 +26,22 @@ export default function CameraPage({ onNavigateUpload, onNavigateViewer }: Camer
   // ─────────────────────────────────────────────────────────────
   // STOP HELPER — uncomment when needed to release the camera
   // ─────────────────────────────────────────────────────────────
-  // function stopCamera(): void {
-  //   streamRef.current?.getTracks().forEach((track) => track.stop());
-  //   streamRef.current = null;
-  //   if (videoRef.current) videoRef.current.srcObject = null;
-  // }
+  function stopCamera(): void {
+    streamRef.current?.getTracks().forEach((track) => track.stop());
+    streamRef.current = null;
+    if (videoRef.current) videoRef.current.srcObject = null;
+  }
 
   // ─────────────────────────────────────────────────────────────
   // PREVIEW BUTTON — starts live camera feed in the <video> element
   // ─────────────────────────────────────────────────────────────
   async function handlePreview(): Promise<void> {
     // If a stream is already running, do nothing
-    if (streamRef.current) return;
+    if (streamRef.current)
+      {
+        stopCamera();
+        return;
+      };
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
