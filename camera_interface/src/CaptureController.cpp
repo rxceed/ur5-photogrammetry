@@ -6,7 +6,9 @@
 #include <nlohmann/json.hpp>
 #include <opencv2/opencv.hpp>
 
+#include <atomic>
 #include <chrono>
+#include <csignal>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -14,6 +16,14 @@
 
 using json = nlohmann::json;
 namespace fs = std::filesystem;
+
+static std::atomic<bool> stopRequested(false);
+
+static void signalHandler(int signal)
+{
+    std::cout << "\n[INFO] Stop signal received: " << signal << "\n";
+    stopRequested.store(true);
+}
 
 CaptureController::CaptureController(const CaptureConfig& config)
     : config_(config),
@@ -42,10 +52,56 @@ PinSnapshot CaptureController::readPinsSafe(
     }
 }
 
+bool CaptureController::waitUntilTriggerLow()
+{
+    std::cout << "[INFO] Waiting PIN "
+              << config_.photoTriggerPin
+              << " to become LOW...\n";
+
+    PinSnapshot lastPins;
+
+    while (!stopRequested.load()) {
+        cv::Mat frame;
+
+        if (!camera_.readFrame(frame)) {
+            std::cerr << "[WARN] Empty camera frame while waiting trigger LOW\n";
+            std::this_thread::sleep_for(
+                std::chrono::milliseconds(config_.pollingDelayMs)
+            );
+            continue;
+        }
+
+        PinSnapshot pins = readPinsSafe(lastPins);
+        lastPins = pins;
+
+        int state = pins.getState(config_.photoTriggerPin, 0);
+
+        std::cout << "\r[STATUS] PIN "
+                  << config_.photoTriggerPin
+                  << " = "
+                  << state
+                  << " | waiting LOW..."
+                  << std::flush;
+
+        if (state == 0) {
+            std::cout << "\n[OK] Trigger pin is LOW. System armed.\n";
+            return true;
+        }
+
+        std::this_thread::sleep_for(
+            std::chrono::milliseconds(config_.pollingDelayMs)
+        );
+    }
+
+    std::cout << "\n[INFO] waitUntilTriggerLow stopped by user\n";
+    return false;
+}
+
 bool CaptureController::sendStartPulseToUR5()
 {
-    std::cout << "[INFO] Sending START pulse to UR5...\n";
-    std::cout << "[INFO] URL: " << config_.startRelayUrl << "\n";
+    std::cout << "[INFO] Sending START pulse to UR5\n";
+    std::cout << "[INFO] Start relay URL: "
+              << config_.startRelayUrl << "\n";
 
     try {
         httpClient_.post(config_.startRelayUrl, "state=on");
@@ -59,7 +115,7 @@ bool CaptureController::sendStartPulseToUR5()
         httpClient_.post(config_.startRelayUrl, "state=off");
 
         std::cout << "[OK] Start relay OFF\n";
-        std::cout << "[OK] UR5 sequence should now start\n";
+        std::cout << "[OK] UR5 sequence should start now\n";
 
         return true;
 
@@ -70,62 +126,11 @@ bool CaptureController::sendStartPulseToUR5()
     }
 }
 
-bool CaptureController::waitUntilTriggerLow()
-{
-    std::cout << "[INFO] Waiting PIN "
-              << config_.photoTriggerPin
-              << " to become LOW...\n";
-
-    PinSnapshot lastPins;
-
-    while (true) {
-        cv::Mat rawFrame;
-
-        if (!camera_.readFrame(rawFrame)) {
-            std::cerr << "[WARN] Empty camera frame\n";
-            std::this_thread::sleep_for(
-                std::chrono::milliseconds(config_.pollingDelayMs)
-            );
-            continue;
-        }
-
-        PinSnapshot pins = readPinsSafe(lastPins);
-        lastPins = pins;
-
-        cv::Mat preview = rawFrame.clone();
-        drawOverlay(preview, pins.states);
-
-        cv::putText(
-            preview,
-            "Waiting PIN " + std::to_string(config_.photoTriggerPin) + " LOW",
-            cv::Point(20, preview.rows - 55),
-            cv::FONT_HERSHEY_SIMPLEX,
-            0.6,
-            cv::Scalar(255, 255, 255),
-            2
-        );
-
-        cv::imshow("UR5 Passive Capture Listener", preview);
-
-        int key = cv::waitKey(1);
-
-        if (key == 'q' || key == 'Q' || key == 27) {
-            return false;
-        }
-
-        if (pins.getState(config_.photoTriggerPin, 0) == 0) {
-            std::cout << "[OK] Trigger pin is LOW. System armed.\n";
-            return true;
-        }
-
-        std::this_thread::sleep_for(
-            std::chrono::milliseconds(config_.pollingDelayMs)
-        );
-    }
-}
-
 int CaptureController::run()
 {
+    std::signal(SIGINT, signalHandler);
+    std::signal(SIGTERM, signalHandler);
+
     fs::path datasetPath = config_.datasetDir;
     fs::path imageDir = datasetPath / "images";
 
@@ -144,29 +149,36 @@ int CaptureController::run()
         return 1;
     }
 
+    std::cout << "========================================\n";
+    std::cout << "UR5 Headless Camera Capture Interface\n";
+    std::cout << "========================================\n";
     std::cout << "Input URL         : " << config_.inputUrl << "\n";
+    std::cout << "Start relay URL   : " << config_.startRelayUrl << "\n";
     std::cout << "Dataset           : " << config_.datasetDir << "\n";
     std::cout << "Image dir         : " << imageDir << "\n";
     std::cout << "Photo trigger pin : " << config_.photoTriggerPin << "\n";
     std::cout << "Camera index      : " << config_.cameraIndex << "\n";
     std::cout << "Polling delay     : " << config_.pollingDelayMs << " ms\n";
     std::cout << "Max captures      : "
-              << (config_.maxCaptures == 0 ? std::string("unlimited") : std::to_string(config_.maxCaptures))
-              << "\n\n";
+              << (config_.maxCaptures == 0
+                  ? std::string("unlimited")
+                  : std::to_string(config_.maxCaptures))
+              << "\n";
+    std::cout << "Start pulse       : " << config_.startPulseMs << " ms\n";
+    std::cout << "Stop command      : CTRL + C\n";
+    std::cout << "========================================\n\n";
 
     int imageIndex = findNextImageIndex(imageDir);
     int captureCount = 0;
 
     if (!waitUntilTriggerLow()) {
         camera_.release();
-        cv::destroyAllWindows();
         return 1;
     }
 
     if (!sendStartPulseToUR5()) {
-    camera_.release();
-    cv::destroyAllWindows();
-    return 1;
+        camera_.release();
+        return 1;
     }
 
     PinSnapshot previousPins;
@@ -175,10 +187,9 @@ int CaptureController::run()
     previousPins = readPinsSafe(previousPins);
 
     std::cout << "[READY] Waiting UR5 DO[0] trigger on PIN "
-              << config_.photoTriggerPin << "\n";
-    std::cout << "[CONTROL] Press C = manual capture | Q/ESC = quit\n";
+              << config_.photoTriggerPin << "\n\n";
 
-    while (true) {
+    while (!stopRequested.load()) {
         if (config_.maxCaptures > 0 && captureCount >= config_.maxCaptures) {
             std::cout << "[DONE] Reached max captures: "
                       << config_.maxCaptures << "\n";
@@ -210,39 +221,26 @@ int CaptureController::run()
         int previousState = previousPins.getState(config_.photoTriggerPin, 0);
         int currentState = currentPins.getState(config_.photoTriggerPin, 0);
 
-        bool risingEdgeDetected = previousState == 0 && currentState == 1;
-        bool captureRequested = risingEdgeDetected;
+        bool risingEdgeDetected =
+            previousState == 0 && currentState == 1;
 
-        cv::Mat preview = rawFrame.clone();
-        drawOverlay(preview, currentPins.states);
+        std::cout << "\r[STATUS] Capture "
+                  << captureCount
+                  << "/"
+                  << (config_.maxCaptures == 0
+                      ? std::string("inf")
+                      : std::to_string(config_.maxCaptures))
+                  << " | PIN "
+                  << config_.photoTriggerPin
+                  << " = "
+                  << currentState
+                  << " | waiting 0->1..."
+                  << std::flush;
 
-        cv::putText(
-            preview,
-            "Capture " + std::to_string(captureCount) + "/" +
-            (config_.maxCaptures == 0 ? std::string("inf") : std::to_string(config_.maxCaptures)) +
-            " | waiting PIN " + std::to_string(config_.photoTriggerPin) + " 0->1",
-            cv::Point(20, preview.rows - 55),
-            cv::FONT_HERSHEY_SIMPLEX,
-            0.6,
-            cv::Scalar(255, 255, 255),
-            2
-        );
+        if (risingEdgeDetected) {
+            std::cout << "\n[TRIGGER] Rising edge detected on PIN "
+                      << config_.photoTriggerPin << "\n";
 
-        cv::imshow("UR5 Passive Capture Listener", preview);
-
-        int key = cv::waitKey(1);
-
-        if (key == 'c' || key == 'C') {
-            std::cout << "[MANUAL] Capture requested by keyboard\n";
-            captureRequested = true;
-        }
-
-        if (key == 'q' || key == 'Q' || key == 27) {
-            std::cout << "[INFO] Exit requested\n";
-            break;
-        }
-
-        if (captureRequested) {
             std::string filename = makeImageName(imageIndex);
             fs::path imagePath = imageDir / filename;
 
@@ -257,7 +255,7 @@ int CaptureController::run()
 
             std::cout << "[CAPTURE] #"
                       << captureCount
-                      << " -> "
+                      << " saved: "
                       << imagePath << "\n";
 
             json meta;
@@ -266,7 +264,7 @@ int CaptureController::run()
             meta["capture_index"] = captureCount;
             meta["estimated_waypoint"] = captureCount;
             meta["photo_trigger_pin"] = config_.photoTriggerPin;
-            meta["trigger_source"] = risingEdgeDetected ? "pin_rising_edge" : "manual_keyboard";
+            meta["trigger_source"] = "pin_rising_edge";
             meta["pins"] = currentPins.states;
             meta["raw_json"] = rawJson;
 
@@ -275,16 +273,12 @@ int CaptureController::run()
 
             imageIndex++;
 
-            // Setelah capture, jangan lanjut sebelum pin balik LOW.
-            // Ini mencegah spam foto selama DO[0] masih HIGH.
-            if (risingEdgeDetected) {
-                if (!waitUntilTriggerLow()) {
-                    break;
-                }
-
-                previousPins = readPinsSafe(currentPins);
-                continue;
+            if (!waitUntilTriggerLow()) {
+                break;
             }
+
+            previousPins = readPinsSafe(currentPins);
+            continue;
         }
 
         previousPins = currentPins;
@@ -295,9 +289,9 @@ int CaptureController::run()
     }
 
     camera_.release();
-    cv::destroyAllWindows();
 
-    std::cout << "[DONE] Passive UR5 capture finished. Total captures: "
+    std::cout << "\n[DONE] Headless UR5 capture finished\n";
+    std::cout << "[DONE] Total captures: "
               << captureCount << "\n";
 
     return 0;

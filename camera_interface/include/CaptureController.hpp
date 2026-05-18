@@ -4,8 +4,6 @@
 #include "CameraCapture.hpp"
 #include "PinSnapshot.hpp"
 
-#include <filesystem>
-#include <fstream>
 #include <string>
 
 struct CaptureConfig {
