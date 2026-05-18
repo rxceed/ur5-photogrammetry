@@ -30,7 +30,7 @@ export const projectModel = {
 
 export const taskModel = {
     taskBody: t.Object({
-        projectName: t.String(),
+        projectId: t.Integer(),
         name: t.String(),
         images: t.Array(t.File({
             type: 'image',

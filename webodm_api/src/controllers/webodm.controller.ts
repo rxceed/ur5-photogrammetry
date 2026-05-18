@@ -24,20 +24,24 @@ export const auth = new Elysia({prefix: '/auth'})
             const res = await WebODM_AuthService.tokenAuth(body)
             jwt!.value = res.token
             jwt!.path = '/'
-            jwt!.httpOnly = true
             jwt!.maxAge = 3600*6
+            jwt!.sameSite = 'lax'
+            return res
         },
         {
             body: authModel.authBody,
+            response: {
+                200: authModel.authRes
+            }
         }
     )
 export const project = new Elysia({prefix: '/project'})
     .use(authHeaderCheck)
     .get('/', 
-        async ({token, query, request: {headers}}) => {
+        async ({query, request: {headers}}) => {
             const authHeader = headers.get('Authorization');
             const tokenFromHeader: string = authHeader!.split(" ")[1] as string;
-            token = tokenFromHeader
+            const token = tokenFromHeader
             const res = await WebODM_ProjectService.getProjectByName(query, token)
             return res
         },
@@ -49,10 +53,10 @@ export const project = new Elysia({prefix: '/project'})
         }
     )
     .post('/',
-        async ({token, body, request: {headers}}) => {
+        async ({body, request: {headers}}) => {
             const authHeader = headers.get('Authorization');
             const tokenFromHeader: string = authHeader!.split(" ")[1] as string;
-            token = tokenFromHeader
+            const token = tokenFromHeader
             const res = await WebODM_ProjectService.createProject(body, token)
             return res
         },
@@ -67,10 +71,10 @@ export const project = new Elysia({prefix: '/project'})
 export const task = new Elysia({prefix: '/task'})
     .use(authHeaderCheck)
     .post('/',
-        async ({body, token, request:{headers}}) => {
+        async ({body, request:{headers}}) => {
             const authHeader = headers.get('Authorization');
             const tokenFromHeader: string = authHeader!.split(" ")[1] as string;
-            token = tokenFromHeader
+            const token = tokenFromHeader
             const res = await WebODM_TaskService.createWebODMTask(body, token);
             return res;
         },

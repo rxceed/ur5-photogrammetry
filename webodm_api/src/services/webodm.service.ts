@@ -86,24 +86,11 @@ export abstract class WebODM_ProjectService{
 }
 
 export abstract class WebODM_TaskService{
-    static async createWebODMTask({projectName, name, images}: taskModel['taskBody'], token: string,){
+    static async createWebODMTask({projectId, name, images}: taskModel['taskBody'], token: string,){
         const fetchData = {
-            projectName: projectName,
+            projectId: projectId,
             name: name
         }
-        const urlProject: string = `${WEBODM_URI_BASE}/api/projects/?name=${fetchData.projectName}`
-        const resProject = await fetch(urlProject, {
-                    method: 'GET',
-                    headers: {
-                        Authorization: `JWT ${token}`
-                    }
-                })
-        if(!resProject.ok) {
-            const errorData = await resProject.json();
-            throw status(500, `Internal Server Error: ${JSON.stringify(errorData)}`);
-        }
-        const resProjectJSON = await resProject.json()
-        const projectId = resProjectJSON.id
         const url = `${WEBODM_URI_BASE}/api/projects/${projectId}/tasks/`;
         const taskOptions = [{"name":"auto-boundary","value":true},
             {"name":"use-hybrid-bundle-adjustment","value":true},
