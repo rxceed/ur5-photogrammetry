@@ -1,0 +1,144 @@
+/* ─── Reset & Base ─────────────────────────────────────────── */
+body {
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+/* ─── Main Card Container ───────────────────────────────────── */
+.container {
+  width: 700px;
+  text-align: center;
+  background: #1f2937;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ─── Video Element ─────────────────────────────────────────── */
+video {
+  width: 100%;
+  border-radius: 12px;
+  background: black;
+}
+
+/* ─── Button Row ────────────────────────────────────────────── */
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* ─── Buttons ───────────────────────────────────────────────── */
+button {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+button:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button.start {
+  background: #10b981;
+  color: white;
+}
+
+button.preview {
+  background: #3b82f6;
+  color: white;
+}
+
+button.upload {
+  background: #f59e0b;
+  color: white;
+}
+
+/* ─── Preview Image ─────────────────────────────────────────── */
+img {
+  margin-top: 20px;
+  width: 100%;
+  border-radius: 12px;
+}
+
+/* ─── Upload Form Styles ─────────────────────────────────────── */
+.form-group {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #9ca3af;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.form-group input[type="text"] {
+  width: 100%;
+  padding: 10px 14px;
+  background: #374151;
+  border: 1px solid #4b5563;
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input[type="text"]:focus {
+  border-color: #3b82f6;
+}
+
+.form-group input[type="text"]::placeholder {
+  color: #6b7280;
+}
+
+.form-group input[type="file"] {
+  width: 100%;
+  padding: 10px 14px;
+  background: #374151;
+  border: 1px solid #4b5563;
+  border-radius: 8px;
+  color: #d1d5db;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.file-count {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+/* ─── Status Messages ────────────────────────────────────────── */
+.status {
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.status.success {
+  color: #10b981;
+}
+
+.status.error {
+  color: #ef4444;
+}

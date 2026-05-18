@@ -15,6 +15,7 @@ add_executable(ur5_capture
     src/CameraCapture.cpp
     src/CaptureController.cpp
     src/Utils.cpp
+    src/WaypointRelayController.cpp
 )
 
 target_include_directories(ur5_capture PRIVATE include)
