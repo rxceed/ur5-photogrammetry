@@ -30,8 +30,17 @@ export default function ViewerPage({ onBack }: ViewerPageProps) {
 
     setLoading(true);
     try {
-        const token = getCookie("jwt");
         const BE_BASE_URI = process.env.BUN_PUBLIC_BE_BASE_URI || "http://localhost:4000";
+        const authUrl = `${BE_BASE_URI}/api/auth/token-auth/`
+        const authRes = await fetch(authUrl, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json',},
+                                body: JSON.stringify({"username": process.env.BUN_PUBLIC_USERNAME as string,
+                                                      "password": process.env.BUN_PUBLIC_PASS as string
+                                }),
+                                credentials: 'include'
+                                })
+        const token = (await authRes.json()).token
         
         // 1. Resolve Project ID from name
         const projectSearchUrl = `${BE_BASE_URI}/api/project?name=${encodeURIComponent(projectName)}`;
