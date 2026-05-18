@@ -12,7 +12,7 @@ struct CaptureConfig {
     std::string datasetDir = "dataset";
 
     int photoTriggerPin = 33;
-    int cameraIndex = 0;
+    std::string cameraPath = "/dev/video0";
 
     int pollingDelayMs = 50;
     int maxCaptures = 16;

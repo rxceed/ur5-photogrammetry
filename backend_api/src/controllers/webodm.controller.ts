@@ -52,6 +52,15 @@ export const project = new Elysia({prefix: '/project'})
             }
         }
     )
+    .get('/:projectId/tasks',
+        async ({params: {projectId}, request: {headers}}) => {
+            const authHeader = headers.get('Authorization');
+            const tokenFromHeader: string = authHeader!.split(" ")[1] as string;
+            const token = tokenFromHeader
+            const res = await WebODM_TaskService.getTasksByProject(projectId, token)
+            return res
+        }
+    )
     .post('/',
         async ({body, request: {headers}}) => {
             const authHeader = headers.get('Authorization');
@@ -83,5 +92,14 @@ export const task = new Elysia({prefix: '/task'})
             response: {
                 201: taskModel.taskRes
             }
+        }
+    )
+    .get('/:projectId/:taskId/model',
+        async ({params: {projectId, taskId}, request: {headers}}) => {
+            const authHeader = headers.get('Authorization');
+            const tokenFromHeader: string = authHeader!.split(" ")[1] as string;
+            const token = tokenFromHeader
+            const res = await WebODM_TaskService.streamTaskModel(projectId, taskId, token);
+            return res;
         }
     )

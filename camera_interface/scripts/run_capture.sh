@@ -23,7 +23,7 @@ echo "[INFO] Input URL         : $INPUT_URL"
 echo "[INFO] Start relay URL   : $START_RELAY_URL"
 echo "[INFO] Dataset           : $DATASET_DIR"
 echo "[INFO] Photo trigger pin : $PHOTO_TRIGGER_PIN"
-echo "[INFO] Camera index      : $CAMERA_INDEX"
+echo "[INFO] Camera path       : $CAMERA_PATH"
 echo "[INFO] Max captures      : $MAX_CAPTURES"
 echo ""
 
@@ -31,6 +31,6 @@ echo ""
     "$INPUT_URL" \
     "$DATASET_DIR" \
     "$PHOTO_TRIGGER_PIN" \
-    "$CAMERA_INDEX" \
+    "$CAMERA_PATH" \
     "$MAX_CAPTURES" \
     "$START_RELAY_URL"

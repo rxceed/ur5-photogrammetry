@@ -22,7 +22,7 @@ int main(int argc, char** argv)
     }
 
     if (argc >= 5) {
-        config.cameraIndex = std::stoi(argv[4]);
+        config.cameraPath = argv[4];
     }
 
     if (argc >= 6) {

@@ -46,20 +46,39 @@ export abstract class WebODM_ProjectService{
             throw status(500, `Internal Server Error: ${JSON.stringify(errorData)}`);
         }
         const resJSON = await res.json()
+        
+        // Log the response from WebODM for debugging intermittent validation errors
+        console.log(`WebODM Search Response for "${name}":`, JSON.stringify(resJSON, null, 2));
+        
+        // WebODM search by name returns a paginated list
+        let project: any;
+        if (resJSON.results && Array.isArray(resJSON.results)) {
+            project = resJSON.results.find((p: any) => p.name === name) || resJSON.results[0];
+        } else if (Array.isArray(resJSON)) {
+            project = resJSON.find((p: any) => p.name === name) || resJSON[0];
+        } else if (resJSON && typeof resJSON === 'object' && resJSON.id) {
+            // Direct object response (unlikely for search but just in case)
+            project = resJSON;
+        }
+        
+        if (!project) {
+            throw status(404, "Project not found");
+        }
+
         return {
-            id: resJSON.id,
-            tasks: resJSON.tasks,
-            created_at: resJSON.created_at,
-            name: resJSON.name,
-            description: resJSON.description,
-            permissions: resJSON.permissions,
+            id: project.id,
+            tasks: project.tasks || [],
+            created_at: project.created_at,
+            name: project.name,
+            description: project.description,
+            permissions: project.permissions || [],
         }
     }
     
     static async createProject({name, description}: projectModel['projectBody'], token: string){
         const fetchData = {
             name: name,
-            description: description
+            description: description || ""
         }
         const url: string = `${WEBODM_URI_BASE}/api/projects/`
         const res = await fetch(url, {
@@ -76,11 +95,11 @@ export abstract class WebODM_ProjectService{
         const resJSON = await res.json()
         return {
             id: resJSON.id,
-            tasks: resJSON.tasks,
+            tasks: resJSON.tasks || [],
             created_at: resJSON.created_at,
             name: resJSON.name,
             description: resJSON.description,
-            permissions: resJSON.permissions,
+            permissions: resJSON.permissions || [],
         }
     }
 }
@@ -97,7 +116,9 @@ export abstract class WebODM_TaskService{
             {"name":"mesh-octree-depth","value":"12"},
             {"name":"skip-orthophoto","value":true},
             {"name":"pc-quality", "value":"high"},
-            {"name":"mesh-size", "value":300000}]
+            {"name":"mesh-size", "value":300000},
+            {"name":"bg-removal", "value":true},
+            {"name":"gltf", "value":true}]
         // 1. Prepare FormData (required for multipart/form-data)
         const formData = new FormData();
         // 2. Append images (WebODM expects the key "images")
@@ -109,6 +130,7 @@ export abstract class WebODM_TaskService{
 
         // 3. Add task metadata
         formData.append("name", fetchData.name);
+        formData.append("auto_processing_node", "true");
 
         // 4. Add options (Must be a JSON-stringified array)
         if (taskOptions.length > 0) {
@@ -153,5 +175,52 @@ export abstract class WebODM_TaskService{
             resize_progress: resJSON.resize_progress,
             running_progress: resJSON.running_progress
         }
+    }
+
+    static async streamTaskModel(projectId: string, taskId: string, token: string) {
+        // 1. Get task details to find available assets
+        const taskUrl = `${WEBODM_URI_BASE}/api/projects/${projectId}/tasks/${taskId}/`;
+        const taskRes = await fetch(taskUrl, {
+            headers: { Authorization: `JWT ${token}` }
+        });
+        
+        if (!taskRes.ok) {
+            const errorData = await taskRes.json();
+            throw status(500, `Failed to fetch task details: ${JSON.stringify(errorData)}`);
+        }
+        
+        const taskData = await taskRes.json() as any;
+        const assets: string[] = taskData.available_assets || [];
+        const glbAsset = assets.find(asset => asset.toLowerCase().endsWith('.glb'));
+        
+        if (!glbAsset) {
+            throw status(404, "GLB model not found for this task. Ensure 'gltf' option was enabled and task is complete.");
+        }
+        
+        // 2. Fetch the actual asset stream
+        const downloadUrl = `${WEBODM_URI_BASE}/api/projects/${projectId}/tasks/${taskId}/download/${glbAsset}`;
+        const downloadRes = await fetch(downloadUrl, {
+            headers: { Authorization: `JWT ${token}` }
+        });
+        
+        if (!downloadRes.ok) {
+            throw status(500, `Failed to download model asset: ${downloadRes.statusText}`);
+        }
+        
+        return downloadRes;
+    }
+
+    static async getTasksByProject(projectId: string, token: string) {
+        const url = `${WEBODM_URI_BASE}/api/projects/${projectId}/tasks/`;
+        const res = await fetch(url, {
+            headers: { Authorization: `JWT ${token}` }
+        });
+        
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw status(500, `Failed to fetch tasks for project ${projectId}: ${JSON.stringify(errorData)}`);
+        }
+        
+        return await res.json();
     }
 }

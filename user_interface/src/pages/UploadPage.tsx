@@ -52,22 +52,49 @@ export default function UploadPage({ onBack }: UploadPageProps) {
     setStatus("loading");
 
     try {
-      const projectUrl = `${baseUrl}/api/project/?name=${projectName}&description=`
+      // 1. Check if project exists
+      const projectUrl = `${baseUrl}/api/project/?name=${encodeURIComponent(projectName)}`
       const projectRes = await fetch(projectUrl, {
                                 method: "GET",
-                                headers: { "Authorization": `JWT ${token}`,
-                                          "Content-Type": "application/json"
+                                headers: { 
+                                  "Authorization": `JWT ${token}`,
+                                  "Content-Type": "application/json"
                                 },
                                 credentials: 'include'
       })
-      const projectId = (await projectRes.json()).id;
-      formData.append("projectId", projectId);
+
+      let projectId;
+      if (projectRes.status === 404) {
+        // 2. Create project if not found
+        console.log("Project not found, creating...");
+        const createProjectUrl = `${baseUrl}/api/project/`
+        const createRes = await fetch(createProjectUrl, {
+          method: "POST",
+          headers: { 
+            "Authorization": `JWT ${token}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ name: projectName }),
+          credentials: 'include'
+        });
+        if (!createRes.ok) throw new Error(`Failed to create project: ${createRes.status}`);
+        const newProject = await createRes.json();
+        projectId = newProject.id;
+      } else if (!projectRes.ok) {
+        throw new Error(`Failed to check project: ${projectRes.status}`);
+      } else {
+        const projectData = await projectRes.json();
+        projectId = projectData.id;
+      }
+
+      if (!projectId) throw new Error("Could not obtain a valid Project ID");
+
+      // 3. Create task
+      formData.append("projectId", projectId.toString());
       const uploadUrl = `${baseUrl}/api/task`
       const response = await fetch(uploadUrl, {
         method: "POST",
-        headers: { "Authorization": `JWT ${token}`,
-                  //'Content-Type': 'multipart/form-data'
-        },
+        headers: { "Authorization": `JWT ${token}` },
         body: formData,
         credentials: 'include'
       });

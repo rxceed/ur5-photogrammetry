@@ -4,11 +4,11 @@
 #include <thread>
 #include <chrono>
 
-bool CameraCapture::open(int cameraIndex)
+bool CameraCapture::open(const std::string& cameraPath)
 {
-    std::cout << "[INFO] Opening camera index: " << cameraIndex << "\n";
+    std::cout << "[INFO] Opening camera path: " << cameraPath << "\n";
 
-    cap_.open(cameraIndex, cv::CAP_V4L2);
+    cap_.open(cameraPath, cv::CAP_V4L2);
 
     if (!cap_.isOpened()) {
         std::cerr << "[ERROR] Failed to open camera with V4L2 backend\n";

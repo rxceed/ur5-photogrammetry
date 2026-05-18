@@ -16,21 +16,21 @@ export const authModel = {
 export const projectModel = {
     projectBody: t.Object({
         name: t.String(),
-        description: t.String()
+        description: t.Optional(t.String())
     }),
     projectRes: t.Object({
-        id: t.Integer(),
-        tasks: t.Array(t.Integer()),
-        created_at: t.String(),
-        name: t.String(),
-        description: t.String(),
-        permissions: t.Array(t.String())
+        id: t.Numeric(),
+        tasks: t.Array(t.Union([t.String(), t.Numeric(), t.Null()])),
+        created_at: t.Union([t.String(), t.Null()]),
+        name: t.Union([t.String(), t.Null()]),
+        description: t.Union([t.String(), t.Null()]),
+        permissions: t.Union([t.Array(t.String()), t.Null()])
     })
 } as const
 
 export const taskModel = {
     taskBody: t.Object({
-        projectId: t.Integer(),
+        projectId: t.Numeric(),
         name: t.String(),
         images: t.Array(t.File({
             type: 'image',
@@ -38,22 +38,22 @@ export const taskModel = {
         }))
     }),
     taskRes: t.Object({
-        id: t.Integer(),
-        project: t.Integer(),
-        processing_node: t.Integer(),
-        processing_node_name: t.String(),
+        id: t.Numeric(),
+        project: t.Numeric(),
+        processing_node: t.Union([t.Integer(), t.Null()]),
+        processing_node_name: t.Union([t.String(), t.Null()]),
         images_count: t.Integer(),
         can_rerun_from: t.Array(t.String()),
         available_assets: t.Array(t.String()),
         uuid: t.String(),
         name: t.String(),
-        processing_time: t.Integer(),
+        processing_time: t.Union([t.Integer(), t.Null()]),
         auto_processing_node: t.Boolean(),
         status: t.Integer(),
-        last_error: t.String(),
+        last_error: t.Union([t.String(), t.Null()]),
         options: t.Array(t.Any()),
         created_at: t.String(),
-        pending_action: t.Integer(),
+        pending_action: t.Union([t.Integer(), t.Null()]),
         upload_progress: t.Number(),
         resize_progress: t.Number(),
         running_progress: t.Number()

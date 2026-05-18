@@ -2,9 +2,10 @@ import { useRef } from "react";
 
 interface CameraPageProps {
   onNavigateUpload: () => void;
+  onNavigateViewer: () => void;
 }
 
-export default function CameraPage({ onNavigateUpload }: CameraPageProps) {
+export default function CameraPage({ onNavigateUpload, onNavigateViewer }: CameraPageProps) {
   const videoRef  = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
@@ -12,12 +13,14 @@ export default function CameraPage({ onNavigateUpload }: CameraPageProps) {
   // START BUTTON — blank template, wire up your own logic here
   // ─────────────────────────────────────────────────────────────
   function handleStart(): void {
-    const RELAY_BASE_URI = process.env.BUN_PUBLIC_RELAY_BASE_URL
-    const url = `${RELAY_BASE_URI}/4`
-    const res = fetch(url, {
-                    method: 'POST',
-                    body: new URLSearchParams({"state": "on"})
+    const BE_BASE_URI = process.env.BUN_PUBLIC_BE_BASE_URI
+    const url = `${BE_BASE_URI}/api/camera/start`
+    fetch(url, {
+                    method: 'POST'
     })
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(err => console.error(err))
   }
 
   // ─────────────────────────────────────────────────────────────
@@ -60,9 +63,16 @@ export default function CameraPage({ onNavigateUpload }: CameraPageProps) {
     onNavigateUpload();
   }
 
+  // ─────────────────────────────────────────────────────────────
+  // VIEWER BUTTON — navigates to the 3D Viewer page
+  // ─────────────────────────────────────────────────────────────
+  function handleViewerNavigate(): void {
+    onNavigateViewer();
+  }
+
   return (
     <div className="container">
-      <h1>Camera Stream</h1>
+      <h1>UR5 Photogrammetry</h1>
 
       {/* muted is required for autoPlay to work in most browsers */}
       <video ref={videoRef} autoPlay playsInline muted />
@@ -71,6 +81,7 @@ export default function CameraPage({ onNavigateUpload }: CameraPageProps) {
         <button className="start"   onClick={handleStart}>Start</button>
         <button className="preview" onClick={handlePreview}>Preview</button>
         <button className="upload"  onClick={handleUploadNavigate}>Upload</button>
+        <button className="viewer"  onClick={handleViewerNavigate}>Viewer</button>
       </div>
 
       {/* Hidden canvas used for frame capture */}
