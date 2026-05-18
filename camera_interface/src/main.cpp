@@ -26,7 +26,11 @@ int main(int argc, char** argv)
     }
 
     if (argc >= 6) {
-        config.relayBaseUrl = argv[5];
+        config.maxCaptures = std::stoi(argv[5]);
+    }
+
+    if (argc >= 7) {
+        config.startRelayUrl = argv[6];
     }
 
     curl_global_init(CURL_GLOBAL_DEFAULT);
