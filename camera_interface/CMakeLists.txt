@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(opensfm_tadin)
+project(camera_interface)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -15,7 +15,6 @@ add_executable(ur5_capture
     src/CameraCapture.cpp
     src/CaptureController.cpp
     src/Utils.cpp
-    src/WaypointRelayController.cpp
 )
 
 target_include_directories(ur5_capture PRIVATE include)

@@ -3,7 +3,6 @@
 #include "HttpClient.hpp"
 #include "CameraCapture.hpp"
 #include "PinSnapshot.hpp"
-#include "WaypointRelayController.hpp"
 
 #include <filesystem>
 #include <fstream>
@@ -11,16 +10,16 @@
 
 struct CaptureConfig {
     std::string inputUrl = "http://192.168.200.219/input";
-    std::string relayBaseUrl = "http://192.168.200.219/relay";
+    std::string startRelayUrl = "http://192.168.200.219/relay/1";
     std::string datasetDir = "dataset";
 
     int photoTriggerPin = 33;
     int cameraIndex = 0;
 
-    int pollingDelayMs = 100;
-    int relayCommandGapMs = 100;
-    int waypointSettleMs = 500;
-    int triggerTimeoutMs = 30000;
+    int pollingDelayMs = 50;
+    int maxCaptures = 16;
+
+    int startPulseMs = 300;
 };
 
 class CaptureController {
@@ -39,12 +38,6 @@ private:
         std::string* rawJsonOut = nullptr
     );
 
-    bool waitForTriggerLow();
-
-    bool waitForPhotoTriggerAndCapture(
-        int waypointId,
-        int& imageIndex,
-        std::ofstream& metadata,
-        const std::filesystem::path& imageDir
-    );
+    bool waitUntilTriggerLow();
+    bool sendStartPulseToUR5();
 };

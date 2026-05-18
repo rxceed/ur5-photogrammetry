@@ -18,12 +18,13 @@ cd "$PROJECT_DIR"
 
 mkdir -p "$DATASET_DIR/images"
 
-echo "[INFO] Starting UR5 waypoint capture sequence..."
+echo "[INFO] Starting UR5 capture system..."
 echo "[INFO] Input URL         : $INPUT_URL"
-echo "[INFO] Relay Base URL    : $RELAY_BASE_URL"
+echo "[INFO] Start relay URL   : $START_RELAY_URL"
 echo "[INFO] Dataset           : $DATASET_DIR"
 echo "[INFO] Photo trigger pin : $PHOTO_TRIGGER_PIN"
 echo "[INFO] Camera index      : $CAMERA_INDEX"
+echo "[INFO] Max captures      : $MAX_CAPTURES"
 echo ""
 
 "$EXECUTABLE_PATH" \
@@ -31,4 +32,5 @@ echo ""
     "$DATASET_DIR" \
     "$PHOTO_TRIGGER_PIN" \
     "$CAMERA_INDEX" \
-    "$RELAY_BASE_URL"
+    "$MAX_CAPTURES" \
+    "$START_RELAY_URL"
