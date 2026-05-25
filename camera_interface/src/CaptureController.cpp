@@ -143,9 +143,9 @@ int CaptureController::run()
         return 1;
     }
 
-    if (!camera_.open(config_.cameraIndex)) {
+    if (!camera_.open(config_.cameraPath)) {
         std::cerr << "[ERROR] Failed to open camera index "
-                  << config_.cameraIndex << "\n";
+                  << config_.cameraPath << "\n";
         return 1;
     }
 
@@ -157,7 +157,7 @@ int CaptureController::run()
     std::cout << "Dataset           : " << config_.datasetDir << "\n";
     std::cout << "Image dir         : " << imageDir << "\n";
     std::cout << "Photo trigger pin : " << config_.photoTriggerPin << "\n";
-    std::cout << "Camera index      : " << config_.cameraIndex << "\n";
+    std::cout << "Camera index      : " << config_.cameraPath << "\n";
     std::cout << "Polling delay     : " << config_.pollingDelayMs << " ms\n";
     std::cout << "Max captures      : "
               << (config_.maxCaptures == 0

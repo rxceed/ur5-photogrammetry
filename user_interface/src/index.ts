@@ -9,7 +9,7 @@ const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".bmp", ".ti
 
 /** Default directory: <project root>/dataset/images */
 const PROJECT_ROOT = path.resolve(import.meta.dir, "../../");
-const DEFAULT_IMAGE_DIR = path.join(PROJECT_ROOT, "dataset", "images");
+const DEFAULT_IMAGE_DIR = path.join(PROJECT_ROOT, process.env.BUN_PUBLIC_DEFAULT_DATASET_DIR as string, "images");
 
 function isImageFile(filename: string): boolean {
   return IMAGE_EXTENSIONS.has(path.extname(filename).toLowerCase());

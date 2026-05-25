@@ -344,7 +344,7 @@ export default function ViewerPage({
                     <input type="text" value={taskName} onChange={e => setTaskName(e.target.value)} placeholder="e.g. Capture 1" />
                 </div>
                 <button 
-                    onClick={handleLoadFromWebODM} 
+                    onClick={() => handleLoadFromWebODM()} 
                     className="preview" 
                     style={{ height: "40px", padding: "0 20px" }}
                     disabled={loading}

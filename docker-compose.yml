@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend_api/Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      - WEBODM_URI_BASE=${WEBODM_URI_BASE}
+      - CORS_ORIGIN=${CORS_ORIGIN}
+      # Environment variables used by the camera capture script/binary
+      - INPUT_URL=${INPUT_URL}
+      - START_RELAY_URL=${START_RELAY_URL}
+      - DATASET_DIR=${DATASET_DIR}
+      - PHOTO_TRIGGER_PIN=${PHOTO_TRIGGER_PIN}
+      - CAMERA_PATH=${CAMERA_PATH}
+      - MAX_CAPTURES=${MAX_CAPTURES}
+      - BUILD_DIR=${BUILD_DIR}
+      - EXECUTABLE_NAME=${EXECUTABLE_NAME}
+    volumes:
+      - ur5photogrammetry_volume:/app/dataset_volume
+    devices:
+      # Map camera device into container (default /dev/video0)
+      - "${CAMERA_PATH:-/dev/video0}:${CAMERA_PATH:-/dev/video0}"
+    extra_hosts:
+      # Allows connecting to WebODM running on the host via host.docker.internal
+      - "host.docker.internal:host-gateway"
+    restart: always
+
+  frontend:
+    build:
+      context: .
+      dockerfile: user_interface/Dockerfile
+    ports:
+      - "4001:4001"
+    environment:
+      - BUN_PUBLIC_INPUT_URL=${BUN_PUBLIC_INPUT_URL}
+      - BUN_PUBLIC_RELAY_BASE_URL=${BUN_PUBLIC_RELAY_BASE_URL}
+      - BUN_PUBLIC_BE_BASE_URI=${BUN_PUBLIC_BE_BASE_URI}
+      - BUN_PUBLIC_USERNAME=${BUN_PUBLIC_USERNAME}
+      - BUN_PUBLIC_PASS=${BUN_PUBLIC_PASS}
+      - BUN_PUBLIC_DEFAULT_PROJECT_NAME=${BUN_PUBLIC_DEFAULT_PROJECT_NAME}
+      - BUN_PUBLIC_DEFAULT_DATASET_DIR=${BUN_PUBLIC_DEFAULT_DATASET_DIR}
+    volumes:
+      - ur5photogrammetry_volume:/app/dataset_volume
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: always
+
+volumes:
+  ur5photogrammetry_volume:
