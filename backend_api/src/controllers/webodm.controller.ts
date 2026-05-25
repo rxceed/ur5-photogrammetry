@@ -103,3 +103,46 @@ export const task = new Elysia({prefix: '/task'})
             return res;
         }
     )
+    .get('/:projectId/:taskId/status-stream',
+        async ({params: {projectId, taskId}, request: {headers}, set}) => {
+            const authHeader = headers.get('Authorization');
+            const tokenFromHeader: string = authHeader!.split(" ")[1] as string;
+            const token = tokenFromHeader;
+
+            // Set SSE headers
+            set.headers['Content-Type'] = 'text/event-stream';
+            set.headers['Cache-Control'] = 'no-cache';
+            set.headers['Connection'] = 'keep-alive';
+            set.headers['X-Accel-Buffering'] = 'no'; // Disable nginx buffering if behind a proxy
+
+            const generator = WebODM_TaskService.streamTaskOutput(projectId, taskId, token);
+
+            const stream = new ReadableStream({
+                async start(controller) {
+                    try {
+                        for await (const chunk of generator) {
+                            controller.enqueue(new TextEncoder().encode(chunk));
+                        }
+                    } catch (err) {
+                        const errMsg = `event: error\ndata: ${JSON.stringify({ message: String(err) })}\n\n`;
+                        controller.enqueue(new TextEncoder().encode(errMsg));
+                    } finally {
+                        controller.close();
+                    }
+                },
+                cancel() {
+                    // Client disconnected — the generator will be GC'd
+                    generator.return(undefined);
+                }
+            });
+
+            return new Response(stream, {
+                headers: {
+                    'Content-Type': 'text/event-stream',
+                    'Cache-Control': 'no-cache',
+                    'Connection': 'keep-alive',
+                    'X-Accel-Buffering': 'no',
+                }
+            });
+        }
+    )

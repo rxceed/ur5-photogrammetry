@@ -223,4 +223,89 @@ export abstract class WebODM_TaskService{
         
         return await res.json();
     }
+
+    static async getTaskStatus(projectId: string, taskId: string, token: string) {
+        const url = `${WEBODM_URI_BASE}/api/projects/${projectId}/tasks/${taskId}/`;
+        const res = await fetch(url, {
+            headers: { Authorization: `JWT ${token}` }
+        });
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw status(500, `Failed to fetch task status: ${JSON.stringify(errorData)}`);
+        }
+        const data = await res.json() as any;
+        return {
+            id: data.id,
+            status: data.status,          // 10=queued, 20=running, 30=failed, 40=completed, 50=cancelled
+            last_error: data.last_error,
+            processing_time: data.processing_time,
+            upload_progress: data.upload_progress,
+            resize_progress: data.resize_progress,
+            running_progress: data.running_progress,
+            pending_action: data.pending_action,
+        };
+    }
+
+    /**
+     * Async generator that continuously polls WebODM's task output endpoint
+     * and yields SSE-formatted strings (log lines + status snapshots).
+     * Terminates when the task reaches a terminal state.
+     *
+     * WebODM task status codes:
+     *   10 = queued, 20 = running, 30 = failed, 40 = completed, 50 = cancelled
+     */
+    static async *streamTaskOutput(
+        projectId: string,
+        taskId: string,
+        token: string,
+        pollIntervalMs = 3000
+    ): AsyncGenerator<string> {
+        const TERMINAL_STATUSES = new Set([30, 40, 50]); // failed, completed, cancelled
+        let lineOffset = 0;
+        let isTerminal = false;
+
+        while (!isTerminal) {
+            // --- Fetch new log lines ---
+            const outputUrl = `${WEBODM_URI_BASE}/api/projects/${projectId}/tasks/${taskId}/output/?line=${lineOffset}`;
+            let newLines: string[] = [];
+            try {
+                const outputRes = await fetch(outputUrl, {
+                    headers: { Authorization: `JWT ${token}` }
+                });
+                if (outputRes.ok) {
+                    const lines = await outputRes.json() as string[];
+                    if (Array.isArray(lines) && lines.length > 0) {
+                        newLines = lines;
+                        lineOffset += lines.length;
+                    }
+                }
+            } catch (e) {
+                // Non-fatal: log line fetch failed, continue polling
+                console.error('[WebODM SSE] Failed to fetch output lines:', e);
+            }
+
+            // Yield each new log line as an SSE "log" event
+            for (const line of newLines) {
+                yield `event: log\ndata: ${JSON.stringify({ line })}\n\n`;
+            }
+
+            // --- Fetch task status ---
+            try {
+                const taskStatus = await WebODM_TaskService.getTaskStatus(projectId, taskId, token);
+                yield `event: status\ndata: ${JSON.stringify(taskStatus)}\n\n`;
+                if (TERMINAL_STATUSES.has(taskStatus.status)) {
+                    isTerminal = true;
+                }
+            } catch (e) {
+                console.error('[WebODM SSE] Failed to fetch task status:', e);
+            }
+
+            if (!isTerminal) {
+                await new Promise(resolve => setTimeout(resolve, pollIntervalMs));
+            }
+        }
+
+        // Signal the client that the stream is done
+        yield `event: done\ndata: ${JSON.stringify({ message: 'Task finished' })}\n\n`;
+    }
 }

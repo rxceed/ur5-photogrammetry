@@ -1,8 +1,10 @@
 import { spawn } from "bun";
 import path from "path";
+import fs from "fs";
 
 export abstract class WebODM_CameraService {
     private static captureProcess: any = null;
+    private static readonly datasetPath = path.resolve(process.cwd(), "../dataset");
 
     static async startCapture() {
         if (this.captureProcess) {
@@ -13,6 +15,14 @@ export abstract class WebODM_CameraService {
                 pid: this.captureProcess.pid
             };
         }
+
+        // Clear the dataset directory before starting a new capture
+        console.log(`[INFO] Clearing dataset directory: ${this.datasetPath}`);
+        if (fs.existsSync(this.datasetPath)) {
+            fs.rmSync(this.datasetPath, { recursive: true, force: true });
+        }
+        fs.mkdirSync(this.datasetPath, { recursive: true });
+        console.log(`[INFO] Dataset directory cleared and recreated.`);
 
         const scriptPath = path.resolve(process.cwd(), "../camera_interface/scripts/run_capture.sh");
         const cwd = path.resolve(process.cwd(), "../camera_interface");
