@@ -4,18 +4,21 @@ import {WebODMRoute} from './routes/webodm.route'
 import {CameraRoute} from './routes/camera.route'
 import "dotenv/config"
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 const app = new Elysia()
     .onError(({ code, error, set }) => {
         if (code === 'VALIDATION') {
+            const err = error as any;
             console.error('Validation Error Details:', {
-                on: error.on,
-                property: error.property,
-                message: error.message,
-                expected: error.expected,
-                found: error.found,
-                errors: error.all
+                on: err.on,
+                property: err.property,
+                message: err.message,
+                expected: err.expected,
+                found: err.found,
+                errors: err.all
             });
-            return error.all;
+            return err.all;
         }
     })
     .onAfterHandle(({ request, set }) => {

@@ -35,6 +35,22 @@ export const auth = new Elysia({prefix: '/auth'})
             }
         }
     )
+    .post('/token-auth/',
+        async ({body, cookie: {jwt}}) => {
+            const res = await WebODM_AuthService.tokenAuth(body)
+            jwt!.value = res.token
+            jwt!.path = '/'
+            jwt!.maxAge = 3600*6
+            jwt!.sameSite = 'lax'
+            return res
+        },
+        {
+            body: authModel.authBody,
+            response: {
+                200: authModel.authRes
+            }
+        }
+    )
 export const project = new Elysia({prefix: '/project'})
     .use(authHeaderCheck)
     .get('/', 

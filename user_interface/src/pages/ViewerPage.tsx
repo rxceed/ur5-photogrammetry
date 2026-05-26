@@ -379,7 +379,7 @@ export default function ViewerPage({
                   {taskStatus && taskStatus.status !== 40 && (
                     <>
                       WebODM Task: {getStatusLabel(taskStatus.status)}
-                      {taskStatus.running_progress !== undefined && taskStatus.running_progress > 0 && ` (${taskStatus.running_progress*100}%)`}
+                      {taskStatus.running_progress !== undefined && taskStatus.running_progress > 0 && ` (${taskStatus.running_progress}%)`}
                     </>
                   )}
                 </div>
@@ -409,7 +409,7 @@ export default function ViewerPage({
             {taskStatus ? (
               <>
                 Status: <span style={{ fontWeight: "bold" }}>{getStatusLabel(taskStatus.status)}</span>
-                {taskStatus.running_progress !== undefined && taskStatus.running_progress > 0 ? ` (${taskStatus.running_progress*100}%)` : ""}
+                {taskStatus.running_progress !== undefined && taskStatus.running_progress > 0 ? ` (${taskStatus.running_progress}%)` : ""}
                 {taskStatus.processing_time ? ` | Time: ${(taskStatus.processing_time / 1000 / 60).toFixed(1)}m` : ""}
               </>
             ) : "No active task connection"}

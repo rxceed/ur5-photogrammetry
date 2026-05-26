@@ -38,7 +38,7 @@ export const taskModel = {
         }))
     }),
     taskRes: t.Object({
-        id: t.Numeric(),
+        id: t.String(),
         project: t.Numeric(),
         processing_node: t.Union([t.Integer(), t.Null()]),
         processing_node_name: t.Union([t.String(), t.Null()]),

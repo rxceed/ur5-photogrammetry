@@ -4,7 +4,7 @@ import { cameraModel } from '../models/camera.model'
 import path from 'path'
 import fs from 'fs'
 
-const DATASET_PATH = path.resolve(process.cwd(), '../dataset')
+const DATASET_PATH = path.resolve(process.cwd(), process.env.DATASET_DIR || '../dataset')
 const IMAGE_EXTS = new Set(['.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.tif', '.webp'])
 
 function listImages(): string[] {

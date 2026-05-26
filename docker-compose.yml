@@ -10,6 +10,7 @@ services:
     environment:
       - WEBODM_URI_BASE=${WEBODM_URI_BASE}
       - CORS_ORIGIN=${CORS_ORIGIN}
+      - NODEODM_URI_BASE=${NODEODM_URI_BASE}
       # Environment variables used by the camera capture script/binary
       - INPUT_URL=${INPUT_URL}
       - START_RELAY_URL=${START_RELAY_URL}
