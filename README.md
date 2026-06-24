@@ -57,7 +57,7 @@ graph TD
     BE -->|Spawns / Bash Script| CppInterface
     CppInterface -->|1. Pulse ON/OFF / HTTP POST| Controller
     Controller -->|2. Trigger sequence| UR5
-    UR5 -->|3. DO[0] HIGH at Waypoint| Controller
+    UR5 -->|3. DO_0 HIGH at Waypoint| Controller
     Controller -->|4. Pin 33 state change| CppInterface
     CppInterface -->|5. Capture frame| Cam
     CppInterface -->|6. Save image & metadata| BE
